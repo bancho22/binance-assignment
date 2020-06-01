@@ -18,6 +18,10 @@ const App = () => {
       dispatch(updateBids({ bids }));
       dispatch(updateAsks({ asks }));
     }
+
+    return () => {
+      conn.close();
+    }
   }, [dispatch]);
   return (
     <div className="App">
