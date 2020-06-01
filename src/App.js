@@ -1,22 +1,22 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {updateBids, updateAsks} from './actions';
+import { updateBids, updateAsks } from './actions';
 import './App.css';
 import InfoCard from './infoCard/InfoCard';
 
 const App = () => {
   const dispatch = useDispatch();
-  const {bids, asks} = useSelector(({bids, asks}) => ({bids, asks}));
+  const { bids, asks } = useSelector(({ bids, asks }) => ({ bids, asks }));
   useEffect(() => {
-      const conn = new WebSocket("wss://dex.binance.org/api/ws");
-      conn.onopen = () => {
-        conn.send(JSON.stringify({ method: "subscribe", topic: "marketDepth", symbols: ["BNB_BTCB-1DE"] }));
+    const conn = new WebSocket("wss://dex.binance.org/api/ws");
+    conn.onopen = () => {
+      conn.send(JSON.stringify({ method: "subscribe", topic: "marketDepth", symbols: ["BNB_BTCB-1DE"] }));
     }
-    conn.onmessage = ({data}) => {
-      const {data: parsedData} = JSON.parse(data);
-      const {bids, asks} = parsedData;
-      dispatch(updateBids({bids}));
-      dispatch(updateAsks({asks}));
+    conn.onmessage = ({ data }) => {
+      const { data: parsedData } = JSON.parse(data);
+      const { bids, asks } = parsedData;
+      dispatch(updateBids({ bids }));
+      dispatch(updateAsks({ asks }));
     }
   }, [dispatch]);
   return (
