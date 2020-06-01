@@ -1,8 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {updateBids, updateAsks} from './actions'
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const {bids, asks} = useSelector(({bids, asks}) => ({bids, asks}));
+  useEffect(() => {
+    const conn = new WebSocket("wss://testnet-dex.binance.org/api/ws");
+    conn.onopen = () => {
+        conn.send(JSON.stringify({ method: "subscribe", topic: "marketDepth", symbols: ["BNB_USDT.B-B7C"] }));
+    }
+    conn.onmessage = ({data}) => {
+      const {data: parsedData} = JSON.parse(data);
+      const {bids, asks} = parsedData;
+      dispatch(updateBids({bids}));
+      dispatch(updateAsks({asks}));
+    }
+  }, [dispatch]);
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +34,10 @@ function App() {
         >
           Learn React
         </a>
+        <div>
+          Bids: {bids}
+          Asks: {asks}
+        </div>
       </header>
     </div>
   );
