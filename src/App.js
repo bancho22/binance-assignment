@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {updateBids, updateAsks} from './actions'
-import logo from './logo.svg';
+import {updateBids, updateAsks} from './actions';
 import './App.css';
+import InfoCard from 'infoCard/InfoCard';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,24 +21,26 @@ const App = () => {
   }, [dispatch]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div>
-          Bids: {bids}
-          Asks: {asks}
-        </div>
-      </header>
+      <div className="bids">
+        {bids.map((bid, index) => (
+          <InfoCard
+            key={`bid_${index}`}
+            type="bid"
+            value={parseFloat(bid[0])}
+            amount={parseFloat(bid[1])}
+          />
+        ))}
+      </div>
+      <div className="asks">
+        {asks.map((ask, index) => (
+          <InfoCard
+            key={`ask_${index}`}
+            type="ask"
+            value={parseFloat(ask[0])}
+            amount={parseFloat(ask[1])}
+          />
+        ))}
+      </div>
     </div>
   );
 }

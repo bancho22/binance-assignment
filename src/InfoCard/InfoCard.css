@@ -1,0 +1,14 @@
+.bids > div, .asks > div {
+  margin: 50px 100px;
+  background-color: #f4f4f4;
+}
+
+.amountContainer {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  width: 25px;
+  height: 25px;
+  }
