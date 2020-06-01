@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {updateBids, updateAsks} from './actions';
 import './App.css';
-import InfoCard from 'infoCard/InfoCard';
+import InfoCard from './infoCard/InfoCard';
 
 const App = () => {
   const dispatch = useDispatch();
