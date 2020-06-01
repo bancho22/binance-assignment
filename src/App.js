@@ -8,9 +8,9 @@ const App = () => {
   const dispatch = useDispatch();
   const {bids, asks} = useSelector(({bids, asks}) => ({bids, asks}));
   useEffect(() => {
-    const conn = new WebSocket("wss://testnet-dex.binance.org/api/ws");
-    conn.onopen = () => {
-        conn.send(JSON.stringify({ method: "subscribe", topic: "marketDepth", symbols: ["BNB_USDT.B-B7C"] }));
+      const conn = new WebSocket("wss://dex.binance.org/api/ws");
+      conn.onopen = () => {
+        conn.send(JSON.stringify({ method: "subscribe", topic: "marketDepth", symbols: ["BNB_BTCB-1DE"] }));
     }
     conn.onmessage = ({data}) => {
       const {data: parsedData} = JSON.parse(data);
